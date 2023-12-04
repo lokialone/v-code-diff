@@ -51,7 +51,16 @@ interface DiffResult {
     delNum: number
   }
 }
-provide('comments', props.comments)
+const comments = ref(props.comments)
+
+function updateComments(val: any) {
+  console.log('val', val)
+  comments.value = val
+}
+provide('comments', {
+  comments,
+  updateComments,
+})
 
 const isUnifiedViewer = computed(() => props.outputFormat === 'line-by-line')
 

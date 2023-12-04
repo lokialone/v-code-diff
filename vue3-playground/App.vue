@@ -44,6 +44,33 @@ const form = reactive({
       ],
     },
     {
+      markLine: 4,
+      lineRange: [1, 10],
+      postion: 0,
+      comments: [{
+        id: 21,
+        avatar: '',
+        username: '',
+        remark: 'remark3',
+        time: '',
+      },
+      {
+        id: 22,
+        avatar: '',
+        username: '',
+        remark: 'remark3',
+        time: '',
+      },
+      {
+        id: 23,
+        avatar: '',
+        username: '',
+        remark: 'remark4',
+        time: '',
+      },
+      ],
+    },
+    {
       markLine: 9,
       lineRange: [6, 10],
       postion: 1,

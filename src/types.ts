@@ -62,6 +62,7 @@ export interface commentItemType {
   time: string
   id: string | number
   remark: string
+  isDraft?: boolean
 }
 export interface CommentType {
   markLine: number
