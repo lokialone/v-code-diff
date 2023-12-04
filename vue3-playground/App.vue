@@ -9,13 +9,13 @@ const form = reactive({
   // oldString: oldLongText,
   // newString: newLongText,
   oldString: '123\n123\n123\n456\n123\n123\n123\n123\n123\n123\n123\n',
-  newString: '123\n123\n123\n123\n123\n123\n123\n123\n123\n123\n123\n',
+  newString: '123\n123\n123\n123\n123\n123\n123\n123\n123\n123\n123\n123\n',
   filename: 'oldFile',
   newFilename: 'newFile',
   language: 'plaintext',
-  diffStyle: 'word',
-  outputFormat: 'line-by-line',
-  context: 3,
+  // diffStyle: 'word',
+  outputFormat: 'side-by-side',
+  // context: 3,
 })
 </script>
 
@@ -27,22 +27,38 @@ const form = reactive({
     <textarea v-model="form.oldString" style="width: 48vw;" :rows="20" />
     <textarea v-model="form.newString" style="width: 48vw;" :rows="20" />
   </div>
-  <CodeDiff
-    :old-string="form.oldString"
-    :new-string="form.newString"
-    :filename="form.filename"
-    :newFilename="form.newFilename"
-    :language="form.language"
-    :output-format="form.outputFormat"
-    :diff-style="form.diffStyle"
-    :context="form.context"
-  />
+  <div class="flex">
+    <div class="sidebar">
+      show side menu
+    </div>
+    <div class="flex-1">
+      <CodeDiff
+        :old-string="form.oldString"
+        :new-string="form.newString"
+        :filename="form.filename"
+        :new-filename="form.newFilename"
+        :language="form.language"
+        :output-format="form.outputFormat"
+        :diff-style="form.diffStyle"
+        :context="form.context"
+      />
+    </div>
+  </div>
 </template>
 
-<style>
+<style lang="scss" scoped>
 body > div {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #2c3e50;
 }
+.flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1
+}
+.siderbar {
+    min-width: 200px;
+  }
 </style>

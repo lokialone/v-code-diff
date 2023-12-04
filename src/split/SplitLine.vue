@@ -7,7 +7,6 @@ defineProps<{
 }>()
 
 const emit = defineEmits(['expand'])
-
 function getCodeMarker(type: DiffType) {
   if (type === DiffType.DELETE)
     return '-'
@@ -74,11 +73,13 @@ function onSplitLineMousedown(side: 'left' | 'right') {
             class="blob-code-inner blob-code-marker" :data-code-marker="getCodeMarker(line.type)"
             v-html="line.code"
           />
+
         </td>
       </template>
       <!-- eslint-enable -->
     </template>
   </tr>
+  <!-- <Comment v-if="!splitLine.hide" /> -->
 </template>
 
 <style lang="scss"></style>

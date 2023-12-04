@@ -55,3 +55,10 @@ export interface UnifiedViewerChange {
   collector: UnifiedLineUnchanges[]
   stat: DiffStat
 }
+
+export interface CommentType {
+  markLine: number
+  lineRange: number[]
+  postion: number
+  message?: string
+}
