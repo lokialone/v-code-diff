@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import Popconfirm from 'ant-design-vue/lib/popconfirm'
 import InputNumber from 'ant-design-vue/lib/input-number'
 
@@ -76,6 +76,11 @@ function cancelNewLineComment() {
   addNewLineComment.value = false
   newLineCommentInfo.remark = ''
 }
+
+watch(() => props.comments, () => {
+  console.log('new props', props.comments)
+  commentInfo.value = generateValue()
+})
 </script>
 
 <template>

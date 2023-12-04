@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { inject, ref } from 'vue'
 import { DiffType } from '../types'
 import type { SplitLineChange } from '../types'
 
@@ -7,6 +8,9 @@ defineProps<{
 }>()
 
 const emit = defineEmits(['expand'])
+
+const { comments, updateComments } = inject('comments')
+
 function getCodeMarker(type: DiffType) {
   if (type === DiffType.DELETE)
     return '-'
@@ -26,6 +30,34 @@ function onSplitLineMousedown(side: 'left' | 'right') {
 
   for (const el of leftElements)
     el.classList.toggle('no-select', side === 'right')
+}
+
+const showLine = ref(-1)
+
+function onMouseEnter(index: number) {
+  showLine.value = index
+}
+function onMouseLeave() {
+  showLine.value = -1
+}
+
+function addLineComment(lineNo: number, position: number) {
+  const newItem = {
+    markLine: lineNo,
+    position,
+    isDraft: true,
+    lineRange: [lineNo, lineNo],
+    comments: [{
+      id: 33333,
+      avatar: '',
+      username: '',
+      remark: 'remark1',
+      time: '',
+    }],
+  }
+  console.log('comments', comments)
+  comments.value.push(newItem)
+  // updateComments(comments.value)
 }
 </script>
 
@@ -47,6 +79,8 @@ function onSplitLineMousedown(side: 'left' | 'right') {
       </template>
       <template v-else>
         <td
+          @mouseenter="() => onMouseEnter(index)"
+          @mouseleave="() => onMouseLeave(index)"
           class="blob-num"
           :class="{
             'blob-num-deletion': line.type === DiffType.DELETE,
@@ -55,6 +89,7 @@ function onSplitLineMousedown(side: 'left' | 'right') {
             'blob-num-hunk': splitLine.hide !== undefined,
           }"
         >
+          <div class="comment-icon" v-if="showLine === index" @click="() => addLineComment(line.num, index)">id</div>
           {{ line.num }}
         </td>
         <td
@@ -82,4 +117,8 @@ function onSplitLineMousedown(side: 'left' | 'right') {
   <!-- <Comment v-if="!splitLine.hide" /> -->
 </template>
 
-<style lang="scss"></style>
+<style lang="less" scoped>
+.comment-icon {
+  position: absolute;
+}
+</style>

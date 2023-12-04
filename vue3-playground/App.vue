@@ -19,7 +19,34 @@ const form = reactive({
     {
       markLine: 4,
       lineRange: [4, 10],
-      postion: 0,
+      position: 0,
+      comments: [{
+        id: 1,
+        avatar: '',
+        username: '',
+        remark: 'remark1',
+        time: '',
+      },
+      {
+        id: 2,
+        avatar: '',
+        username: '',
+        remark: 'remark2',
+        time: '',
+      },
+      {
+        id: 3,
+        avatar: '',
+        username: '',
+        remark: 'remark2',
+        time: '',
+      },
+      ],
+    },
+    {
+      markLine: 4,
+      lineRange: [4, 10],
+      position: 1,
       comments: [{
         id: 1,
         avatar: '',
@@ -46,7 +73,7 @@ const form = reactive({
     {
       markLine: 4,
       lineRange: [1, 10],
-      postion: 0,
+      position: 0,
       comments: [{
         id: 21,
         avatar: '',
@@ -73,7 +100,7 @@ const form = reactive({
     {
       markLine: 9,
       lineRange: [6, 10],
-      postion: 1,
+      position: 1,
       comments: [
         {
           id: 1,
@@ -87,23 +114,6 @@ const form = reactive({
   ],
   // context: 3,
 })
-
-function commentRefresh() {
-  form.comments = [{
-    markLine: 9,
-    lineRange: [6, 10],
-    postion: 1,
-    comments: [
-      {
-        id: 1,
-        avatar: '',
-        username: '',
-        remark: 'mark2',
-        time: '',
-      },
-    ],
-  }]
-}
 </script>
 
 <template>
@@ -129,7 +139,6 @@ function commentRefresh() {
         :diff-style="form.diffStyle"
         :context="form.context"
         :comments="form.comments"
-        @commentRefresh="commentRefresh"
       />
     </div>
   </div>

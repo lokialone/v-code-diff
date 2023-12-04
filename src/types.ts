@@ -67,6 +67,6 @@ export interface commentItemType {
 export interface CommentType {
   markLine: number
   lineRange: number[]
-  postion: number
+  position: number
   comments: commentItemType[]
 }
