@@ -37,4 +37,12 @@ export const baseBuildConfig = defineConfig({
   optimizeDeps: {
     exclude: ['vue-demi', 'vue', 'vue2'],
   },
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+        additionalData: '@root-entry-name: default;',
+      },
+    },
+  },
 })

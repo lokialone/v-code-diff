@@ -15,8 +15,68 @@ const form = reactive({
   language: 'plaintext',
   // diffStyle: 'word',
   outputFormat: 'side-by-side',
+  comments: [
+    {
+      markLine: 4,
+      lineRange: [4, 10],
+      postion: 0,
+      comments: [{
+        id: 1,
+        avatar: '',
+        username: '',
+        remark: 'remark1',
+        time: '',
+      },
+      {
+        id: 2,
+        avatar: '',
+        username: '',
+        remark: 'remark2',
+        time: '',
+      },
+      {
+        id: 3,
+        avatar: '',
+        username: '',
+        remark: 'remark2',
+        time: '',
+      },
+      ],
+    },
+    {
+      markLine: 9,
+      lineRange: [6, 10],
+      postion: 1,
+      comments: [
+        {
+          id: 1,
+          avatar: '',
+          username: '',
+          remark: 'mark2',
+          time: '',
+        },
+      ],
+    },
+  ],
   // context: 3,
 })
+
+function commentRefresh() {
+  form.comments = [{
+    markLine: 9,
+    lineRange: [6, 10],
+    postion: 1,
+    comments: [
+      {
+        id: 1,
+        avatar: '',
+        username: '',
+        remark: 'mark2',
+        time: '',
+      },
+    ],
+  }]
+}
 </script>
 
 <template>
@@ -41,6 +101,8 @@ const form = reactive({
         :output-format="form.outputFormat"
         :diff-style="form.diffStyle"
         :context="form.context"
+        :comments="form.comments"
+        @commentRefresh="commentRefresh"
       />
     </div>
   </div>

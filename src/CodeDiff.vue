@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue-demi'
+import { computed, provide, ref, watch } from 'vue-demi'
 import { createSplitDiff, createUnifiedDiff } from './utils'
 import UnifiedViewer from './unified/UnifiedViewer.vue'
 import SplitViewer from './split/SplitViewer.vue'
@@ -21,6 +21,7 @@ interface Props {
   hideHeader?: boolean
   hideStat?: boolean
   theme?: 'light' | 'dark'
+  comments: any
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -36,6 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
   hideHeader: false,
   hideStat: false,
   theme: 'light',
+  comments: [],
 })
 
 const emits = defineEmits<{
@@ -49,6 +51,7 @@ interface DiffResult {
     delNum: number
   }
 }
+provide('comments', props.comments)
 
 const isUnifiedViewer = computed(() => props.outputFormat === 'line-by-line')
 

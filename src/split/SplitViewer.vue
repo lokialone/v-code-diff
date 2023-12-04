@@ -15,21 +15,6 @@ function expandHandler({ hideIndex }: SplitLineChange) {
     line.fold = false
   })
 }
-
-const comments = [
-  {
-    markLine: 4,
-    lineRange: [4, 10],
-    postion: 0,
-    message: 'dddddd',
-  },
-  {
-    markLine: 9,
-    lineRange: [6, 10],
-    postion: 1,
-    message: '你好啊啊啊啊啊啊啊啊aaa ',
-  },
-]
 </script>
 
 <template>
@@ -43,7 +28,7 @@ const comments = [
     <tbody>
       <template v-for="(item, index) in diffChange?.changes" :key="index">
         <SplitLine :split-line="item" @expand="expandHandler" />
-        <Comment :line="item" :comments="comments" />
+        <Comment :line="item" />
       </template>
     </tbody>
   </table>

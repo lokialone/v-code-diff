@@ -56,9 +56,16 @@ export interface UnifiedViewerChange {
   stat: DiffStat
 }
 
+export interface commentItemType {
+  avatar: string
+  username: string
+  time: string
+  id: string | number
+  remark: string
+}
 export interface CommentType {
   markLine: number
   lineRange: number[]
   postion: number
-  message?: string
+  comments: commentItemType[]
 }

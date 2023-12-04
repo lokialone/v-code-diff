@@ -48,9 +48,11 @@
     }
   },
   "dependencies": {
+    "ant-design-vue": "^3.2.15",
     "diff": "^5.0.0",
     "diff-match-patch": "^1.0.5",
     "highlight.js": "^11.9.0",
+    "less": "^4.2.0",
     "vue-demi": "^0.13.11"
   },
   "devDependencies": {

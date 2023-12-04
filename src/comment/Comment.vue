@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import type { CommentType, SplitLineChange } from '../types'
 import Content from './Content.vue'
 
 const props = defineProps<{
   line: SplitLineChange
-  comments: CommentType[]
 }>()
+
+const comments = inject('comments')
 function getShow() {
-  const res = props.comments.find((item: CommentType) => {
+  const res = comments.find((item: CommentType) => {
     const postion = item.postion
     return postion === 0 ? item.markLine === props.line.left.num : item.markLine === props.line.right.num
   })

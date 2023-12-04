@@ -1,17 +1,47 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+import Popconfirm from 'ant-design-vue/lib/popconfirm'
 import type { CommentType } from '../types'
+import 'ant-design-vue/lib/popconfirm/style'
 
 const props = defineProps<{
   comment: CommentType
 }>()
+const emits = defineEmits<{
+  (e: 'commentRefresh', diffResult: any): void
+}>()
 
 const commentInfo = reactive({
   ...props.comment,
-  isEdit: false,
+  comments: props.comment.comments.map(item => ({
+    ...item,
+    isEdit: false,
+  })),
 })
 
-console.log('--->', props.comment)
+const editBeforeValue = ref('')
+
+function edit(comment) {
+  editBeforeValue.value = comment.remark
+  comment.isEdit = true
+}
+
+function cancelEdit(comment) {
+  comment.remark = editBeforeValue.value
+  comment.isEdit = false
+  editBeforeValue.value = ''
+}
+
+function saveEdit(comment) {
+  console.log('comment', comment)
+  comment.isEdit = false
+  editBeforeValue.value = ''
+}
+
+function deleteComment(comment) {
+  //
+  emits('commentRefresh', [])
+}
 </script>
 
 <template>
@@ -19,8 +49,8 @@ console.log('--->', props.comment)
     <div class="comment-line">
       评论行代码 <span>1</span> to <span>8</span>
     </div>
-    <div class="user-comment">
-      <div class="user-comment-header">
+    <div v-for="(comment, index) in commentInfo.comments" :key="index" class="user-comment">
+      <div class="user-comment-header" :class="{ 'ml-40': index !== 0 }">
         <img
           class="awatar"
           src="https://static.yximgs.com/udata/pkg/KS-IS-AVATAR-PRODUCTION/60224/FFE74E660B0538CB2E6D6DED32EF327B_compressed_100"
@@ -28,14 +58,29 @@ console.log('--->', props.comment)
         >
         <span class="name"> 你好</span> <span class="time"> 21小时前</span>
       </div>
-      <div class="user-comment-content">
-        <input v-if="commentInfo.isEdit" v-model="commentInfo.message" class="ml-40 input">
-        <div v-else class="ml-40">
-          {{ commentInfo.message }}
+      <div class="user-comment-content" :class="{ 'ml-40': index !== 0 }">
+        <div v-if="comment.isEdit" class="mt-12">
+          <textarea v-model="comment.remark" class="textarea" />
+          <div class="textarea-operation">
+            <span class="text-btn color-theme" @click="() => cancelEdit(comment)">取消编辑</span> <span class="btn" @click="() => saveEdit(comment)">保存</span>
+          </div>
         </div>
-      </div>
-      <div class="user-comment-operation ">
-        <span class="text-btn ml-40">回复</span> <span class="text-btn">编辑</span> <span class="text-btn">删除</span>
+        <div v-else>
+          <div>
+            {{ comment.remark }}
+          </div>
+          <div class="user-comment-operation">
+            <span class="text-btn">回复</span> <span class="text-btn" @click="() => edit(comment)">编辑</span>
+            <Popconfirm
+              title="确认删除当前评论"
+              ok-text="确认"
+              cancel-text="取消"
+              @confirm="() => deleteComment(comment)"
+            >
+              <span class="text-btn">删除</span>
+            </Popconfirm>
+          </div>
+        </div>
       </div>
     </div>
     <div class="add-comment">
@@ -78,6 +123,16 @@ console.log('--->', props.comment)
     font-size: 14px;
     margin: 12px;
   }
+  .user-comment-content {
+    margin-left: 40px;
+    .textarea-operation {
+      display: flex;
+      margin-left: 260px;
+      margin-top: 12px;
+      align-items: center;
+      // justify-content: flex-end;
+    }
+  }
 }
 
 .name {
@@ -96,6 +151,9 @@ console.log('--->', props.comment)
 .ml-40 {
   margin-left: 40px;
 }
+.mt-12 {
+  margin-top: 12px;
+}
 
 .input {
   height: 32px;
@@ -105,5 +163,24 @@ console.log('--->', props.comment)
 .text-btn {
   padding: 0 12px;
   cursor: pointer;
+  font-size: 14px;
+}
+
+.textarea {
+  height: 100px;
+  min-width: 400px;
+  border: 1px solid rgba(0, 0, 0, .06);
+  padding: 12px;
+}
+.color-theme {
+  color: #1890ff;
+}
+.btn {
+  background-color: #1890ff;
+  display: inline-block;
+  color: white;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 4px;
 }
 </style>
