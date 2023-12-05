@@ -13,7 +13,6 @@ const show = computed(() => {
     const position = item.position
     return position === 0 ? item.markLine === props.line.left.num : item.markLine === props.line.right.num
   })
-  console.log('res---->', res.filter(item => item.position === 0), res.filter(item => item.position === 1))
   return {
     show: !!res.length,
     position: res.length && res[0].position,
@@ -45,15 +44,15 @@ const show = computed(() => {
 <style scoped>
 .comment-space {
  background-color: #e5ecf6;
+ vertical-align: baseline;
 }
 .comment-content-td-left {
   background-color: #e5ecf6;
-  /* border-right: 1px solid var(--color-border-muted) */
 }
 .comment-content-left {
   box-sizing: border-box;
 }
 .border-left {
-  border-left: 1px solid red
+   border-left: 1px solid var(--color-border-muted)
 }
 </style>

@@ -28,7 +28,7 @@ function generateValue() {
     })),
   }))
 }
-const commentInfo = reactive(generateValue())
+const commentInfo = ref(generateValue())
 const editBeforeValue = ref('')
 
 function edit(comment) {
@@ -77,8 +77,17 @@ function cancelNewLineComment() {
   newLineCommentInfo.remark = ''
 }
 
+function saveNewLineComment() {
+  commentInfo.value = [...generateValue(), {
+    ...newLineCommentInfo,
+  }]
+  console.log([...generateValue(), {
+    ...newLineCommentInfo,
+  }])
+}
+
 watch(() => props.comments, () => {
-  console.log('new props', props.comments)
+  // console.log('new props', props.comments)
   commentInfo.value = generateValue()
 })
 </script>
@@ -137,9 +146,9 @@ watch(() => props.comments, () => {
       <input v-if="!addNewLineComment" class="input ml-8" placeholder="添加评论" @focus="addNewLineComment = true">
       <div v-else>
         <div> 评论行代码 <InputNumber v-model="newLineCommentInfo.lineRange[0]" /> to <span>{{ newLineCommentInfo.lineRange[1] }}</span></div>
-        <textarea class="textarea" />
+        <textarea v-model="newLineCommentInfo.remark" class="textarea" />
         <div class="textarea-operation">
-          <span class="text-btn color-theme" @click="cancelNewLineComment">取消编辑</span> <span class="btn" @click="() => saveEdit(newLineCommentInfo)">保存</span>
+          <span class="text-btn color-theme" @click="cancelNewLineComment">取消编辑</span> <span class="btn" @click="() => saveNewLineComment()">保存</span>
         </div>
       </div>
     </div>
